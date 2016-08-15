@@ -11,7 +11,6 @@ public class UI extends javax.swing.JFrame {
     private final javax.swing.JButton launchButton = new javax.swing.JButton();
     private final javax.swing.JComboBox comboBox = new javax.swing.JComboBox(listModel);
     private final java.awt.Dimension dimension = new java.awt.Dimension(360, 65);
-    private final com.event.UIMouseAdapter mouseAdapter = new com.event.UIMouseAdapter(comboBox);
     private final com.event.UIActionListener actionListener = new com.event.UIActionListener();
 
     private UI() {
@@ -41,14 +40,6 @@ public class UI extends javax.swing.JFrame {
         refreshButton.addActionListener(actionListener);
         launchButton.setIcon(com.resource.Resource.LAUNCH);
         launchButton.addActionListener(actionListener);
-        comboBox.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
-            protected javax.swing.JButton createArrowButton() {
-                final javax.swing.JButton button = new javax.swing.JButton();
-                button.setIcon(com.resource.Resource.ARROW);
-                button.addMouseListener(mouseAdapter);
-                return button;
-            }
-        });
         comboBox.setFont(new java.awt.Font("Dialog", 1, 11));
         comboBox.setRenderer(new javax.swing.ListCellRenderer() {
             public java.awt.Component getListCellRendererComponent(javax.swing.JList list, Object value, int index, boolean selected, boolean focused) {
@@ -61,7 +52,21 @@ public class UI extends javax.swing.JFrame {
             }
         });
         comboBox.addActionListener(actionListener);
-        comboBox.addMouseListener(mouseAdapter);
+        comboBox.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent event) {
+                for (com.version.Version version : com.version.VersionManager.getVersions()) {
+                    version.refresh();
+                }
+            }
+
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent event) {
+
+            }
+
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent event) {
+
+            }
+        });
         label.setFont(new java.awt.Font("Dialog", 0, 3));
         label.setText(String.format("Copyright © 2016 By the Developers of %s All Rights Reserved", com.config.Constants.SERVER_NAME));
         final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(panel);

@@ -18,7 +18,6 @@ public class Resource {
     public static final ImageIcon UPDATED = getIcon("Updated");
     public static final ImageIcon OUTDATED = getIcon("Outdated");
     public static final ImageIcon MISSING = getIcon("Missing");
-    public static final ImageIcon ARROW = getIcon("Arrow");
     public static final ImageIcon LIST_ICON = getIcon(
             SystemUtils.IS_OS_WINDOWS ?
                     "Windows" : SystemUtils.IS_OS_MAC ?
