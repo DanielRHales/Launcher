@@ -1,5 +1,6 @@
 package com.data;
 
+import com.config.Configuration;
 import com.logging.Logger;
 
 import java.io.IOException;
@@ -11,7 +12,7 @@ import java.util.logging.Level;
 /**
  * @author Daniel
  */
-public final class CheckSum {
+public final class StreamHash {
 
     public static String getStreamHash(InputStream stream) {
         if (stream == null) {
@@ -20,15 +21,15 @@ public final class CheckSum {
         try {
             return checkStream(stream);
         } catch (IOException ex) {
-            Logger.log(CheckSum.class, Level.WARNING, "Error getting stream", ex);
+            Logger.log(StreamHash.class, Level.WARNING, "Error getting stream", ex);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.log(CheckSum.class, Level.WARNING, "Error getting stream", ex);
+            Logger.log(StreamHash.class, Level.WARNING, "Error getting stream", ex);
         }
         return null;
     }
 
     private static byte[] getBytes(final InputStream stream) throws NoSuchAlgorithmException, IOException {
-        final MessageDigest digest = MessageDigest.getInstance("MD5");
+        final MessageDigest digest = Configuration.getDigest();
         int value;
         final byte[] buffer = new byte[128];
         while ((value = stream.read(buffer)) != -1 && value > 0) {

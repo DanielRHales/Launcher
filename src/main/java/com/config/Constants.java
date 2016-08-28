@@ -18,4 +18,8 @@ public class Constants {
     public static final String REMOTE_ROOT_LINK = String.format("http://cache.%s.com/", SERVER_NAME);
     public static final String REMOTE_VERSIONS_LINK = String.format("%sClients.json", REMOTE_ROOT_LINK);
 
+    private static final String[] ALGORITHMS = new String[]{"MD5", "SHA-1", "SHA-256"};
+
+    static final String ALGORITHM = ALGORITHMS[2];
+
 }

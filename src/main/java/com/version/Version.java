@@ -2,7 +2,7 @@ package com.version;
 
 import com.config.Configuration;
 import com.config.Constants;
-import com.data.CheckSum;
+import com.data.StreamHash;
 import com.io.Connector;
 
 import java.io.File;
@@ -16,8 +16,8 @@ public class Version {
     private final double currentVersion;
     private final String jarName;
 
-    private String fileHash = null;
-    private String urlHash = null;
+    private String fileKey = null;
+    private String urlKey = null;
 
     @SuppressWarnings("unused")
     public Version(String name, double currentVersion, String jarName) {
@@ -43,17 +43,22 @@ public class Version {
     }
 
     public boolean updateRequired() {
-        return fileHash == null
-                || urlHash == null
-                || !fileHash.equals(urlHash)
+        return fileKey == null
+                || urlKey == null
+                || !fileKey.equals(urlKey)
                 || !getFile().exists();
     }
 
     public void refresh() {
-        fileHash = (CheckSum.getStreamHash(Configuration.getFileStream().setInputStream(Connector.getFileInputStream(getFile()))));
-        if (urlHash == null) {
-            urlHash = (CheckSum.getStreamHash(Configuration.getUrlStream().setInputStream(Connector.getUrlInputStream(getUrl()))));
+        fileKey = (StreamHash.getStreamHash(Configuration.getFileStream().setInputStream(Connector.getFileInputStream(getFile()))));
+        if (urlKey == null) {
+            urlKey = (StreamHash.getStreamHash(Configuration.getUrlStream().setInputStream(Connector.getUrlInputStream(getUrl()))));
         }
         Configuration.getFileStream().close();
+        printKeys();
+    }
+
+    private void printKeys() {
+        System.out.println(String.format("%s -->\n\t%s\n\t%s\n\t\t%s\n", name, fileKey, urlKey, fileKey.equals(urlKey) ? "Updated" : "Update Required"));
     }
 }
