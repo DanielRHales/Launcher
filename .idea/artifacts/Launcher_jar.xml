@@ -6,9 +6,9 @@
         <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="Launcher" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/library/Commons.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/library/Substance.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/library/GSON.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jvnet/substance/Substance/1.0/Substance-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.7/gson-2.7.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

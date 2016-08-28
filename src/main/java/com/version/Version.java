@@ -55,10 +55,5 @@ public class Version {
             urlKey = (StreamHash.getStreamHash(Configuration.getUrlStream().setInputStream(Connector.getUrlInputStream(getUrl()))));
         }
         Configuration.getFileStream().close();
-        printKeys();
-    }
-
-    private void printKeys() {
-        System.out.println(String.format("%s -->\n\t%s\n\t%s\n\t\t%s\n", name, fileKey, urlKey, fileKey.equals(urlKey) ? "Updated" : "Update Required"));
     }
 }
