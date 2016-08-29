@@ -10,7 +10,7 @@ import javax.swing.*;
 public class Dialog {
 
     public static boolean acceptedChoice(final String title, final String message) {
-        return JOptionPane.showConfirmDialog(UI.getInstance(), message, title, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION;
+        return JOptionPane.showConfirmDialog(UI.getInstance(), title, message, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION;
     }
 
     public static void displayMessage() {

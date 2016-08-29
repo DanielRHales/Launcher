@@ -3,6 +3,7 @@ package com;
 import com.frame.UI;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.border.GlassInnerBorderPainter;
+import org.jvnet.substance.button.ClassicButtonShaper;
 import org.jvnet.substance.painter.GlassGradientPainter;
 import org.jvnet.substance.skin.EbonyHighContrastSkin;
 import org.jvnet.substance.theme.SubstanceEbonyTheme;
@@ -25,6 +26,7 @@ public class Main {
         SubstanceLookAndFeel.setCurrentWatermark(new SubstanceKatakanaWatermark());
         SubstanceLookAndFeel.setCurrentBorderPainter(new GlassInnerBorderPainter());
         SubstanceLookAndFeel.setCurrentGradientPainter(new GlassGradientPainter());
+        SubstanceLookAndFeel.setCurrentButtonShaper(new ClassicButtonShaper());
         initialize();
     }
 

@@ -7,7 +7,7 @@ import java.io.File;
  */
 public class Constants {
 
-    public static final String SERVER_NAME = "DeviousPs";
+    public static final String SERVER_NAME = "Noxious";
 
     public static final String TITLE = String.format("%s Launcher", SERVER_NAME);
 
