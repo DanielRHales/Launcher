@@ -1,5 +1,7 @@
 package com.frame;
 
+import com.version.VersionManager;
+
 /**
  * @author Daniel
  */
@@ -44,7 +46,7 @@ public class UI extends javax.swing.JFrame {
         comboBox.setRenderer(new javax.swing.ListCellRenderer() {
             public java.awt.Component getListCellRendererComponent(javax.swing.JList list, Object value, int index, boolean selected, boolean focused) {
                 javax.swing.JLabel label = new javax.swing.JLabel();
-                final com.version.Version version = index != -1 ? com.version.VersionManager.getVersion(index) : null;
+                final com.version.Version version = VersionManager.getVersions().length > 0 && index != -1 ? com.version.VersionManager.getVersion(index) : null;
                 label.setText(version != null ? version.getDescription() : value.toString());
                 label.setIcon(version != null ? version.updateRequired() ? version.getFile().exists() ? com.resource.Resource.OUTDATED : com.resource.Resource.MISSING : com.resource.Resource.UPDATED : com.resource.Resource.LIST_ICON);
                 label.setForeground(version != null ? version.updateRequired() ? version.getFile().exists() ? java.awt.Color.YELLOW : java.awt.Color.RED : selected ? java.awt.Color.GREEN : java.awt.Color.YELLOW : java.awt.Color.WHITE);

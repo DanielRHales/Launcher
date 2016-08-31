@@ -35,8 +35,8 @@
 
 -keep public class com.version.Version {
     private final java.lang.String name;
-    private final double currentVersion;
-    private final java.lang.String jarName;
+    private final double version;
+    private final java.lang.String file;
 }
 
 # Keep - Applications. Keep all application classes, along with their 'main'

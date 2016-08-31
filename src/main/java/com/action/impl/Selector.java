@@ -1,7 +1,6 @@
 package com.action.impl;
 
 import com.action.Process;
-import com.version.Version;
 import com.version.VersionManager;
 
 /**
@@ -10,7 +9,6 @@ import com.version.VersionManager;
 public class Selector extends Process {
 
     public Selector() {
-
     }
 
     public void preProcess() {
@@ -18,9 +16,7 @@ public class Selector extends Process {
     }
 
     public void process() {
-        for (Version version : VersionManager.getVersions()) {
-            version.refresh();
-        }
+        VersionManager.refreshVersions();
     }
 
     public void postProcess() {

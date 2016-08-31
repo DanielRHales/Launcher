@@ -18,6 +18,12 @@ import java.util.logging.Level;
  */
 public class VersionManager {
 
+    public static void refreshVersions() {
+        for (Version version : getVersions()) {
+            version.refresh();
+        }
+    }
+
     private static Version[] versions;
 
     public static Version[] setVersions() {

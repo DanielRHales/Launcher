@@ -2,15 +2,14 @@ package com;
 
 import com.frame.UI;
 import org.jvnet.substance.SubstanceLookAndFeel;
-import org.jvnet.substance.border.GlassInnerBorderPainter;
+import org.jvnet.substance.border.FlatBorderPainter;
 import org.jvnet.substance.button.ClassicButtonShaper;
-import org.jvnet.substance.painter.GlassGradientPainter;
-import org.jvnet.substance.skin.EbonyHighContrastSkin;
-import org.jvnet.substance.theme.SubstanceEbonyTheme;
-import org.jvnet.substance.watermark.SubstanceKatakanaWatermark;
+import org.jvnet.substance.painter.MatteGradientPainter;
+import org.jvnet.substance.skin.EmeraldDuskSkin;
+import org.jvnet.substance.title.FlatTitlePainter;
+import org.jvnet.substance.watermark.SubstanceBinaryWatermark;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author Daniel
@@ -21,11 +20,11 @@ public class Main {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         JPopupMenu.setDefaultLightWeightPopupEnabled(true);
-        SubstanceLookAndFeel.setSkin(new EbonyHighContrastSkin());
-        SubstanceLookAndFeel.setCurrentTheme(new SubstanceEbonyTheme());
-        SubstanceLookAndFeel.setCurrentWatermark(new SubstanceKatakanaWatermark());
-        SubstanceLookAndFeel.setCurrentBorderPainter(new GlassInnerBorderPainter());
-        SubstanceLookAndFeel.setCurrentGradientPainter(new GlassGradientPainter());
+        SubstanceLookAndFeel.setSkin(new EmeraldDuskSkin());
+        SubstanceLookAndFeel.setCurrentWatermark(new SubstanceBinaryWatermark());
+        SubstanceLookAndFeel.setCurrentBorderPainter(new FlatBorderPainter());
+        SubstanceLookAndFeel.setCurrentGradientPainter(new MatteGradientPainter());
+        SubstanceLookAndFeel.setCurrentTitlePainter(new FlatTitlePainter());
         SubstanceLookAndFeel.setCurrentButtonShaper(new ClassicButtonShaper());
         initialize();
     }
@@ -35,7 +34,7 @@ public class Main {
     }
 
     private void initialize() {
-        EventQueue.invokeLater(
+        new Thread(
                 new SwingWorker() {
                     protected Void doInBackground() throws Exception {
                         UI.getInstance().getRefreshButton().doClick();
@@ -46,7 +45,7 @@ public class Main {
                         UI.getInstance().setVisible(true);
                     }
                 }
-        );
+        ).start();
     }
 
 }

@@ -13,21 +13,21 @@ import java.io.File;
 public class Version {
 
     private final String name;
-    private final double currentVersion;
-    private final String jarName;
+    private final double version;
+    private final String file;
 
     private String fileKey = null;
     private String urlKey = null;
 
     @SuppressWarnings("unused")
-    public Version(String name, double currentVersion, String jarName) {
+    public Version(String name, double version, String file) {
         this.name = name;
-        this.currentVersion = currentVersion;
-        this.jarName = jarName;
+        this.version = version;
+        this.file = file;
     }
 
     public File getFile() {
-        return new File(Constants.PROGRAM_DIRECTORY, String.format("%s-%s.jar", jarName, Double.toString(currentVersion).replace(".", "_")));
+        return new File(Constants.PROGRAM_DIRECTORY, String.format("%s-%s.jar", file, Double.toString(version).replace(".", "_")));
     }
 
     public String getUrl() {
@@ -35,7 +35,7 @@ public class Version {
     }
 
     public String toString() {
-        return String.format("%s Client v%.1f", name, currentVersion);
+        return String.format("%s Client v%.1f", name, version);
     }
 
     public String getDescription() {
@@ -54,6 +54,5 @@ public class Version {
         if (urlKey == null) {
             urlKey = (StreamHash.getStreamHash(Configuration.getUrlStream().setInputStream(Connector.getUrlInputStream(getUrl()))));
         }
-        Configuration.getFileStream().close();
     }
 }
