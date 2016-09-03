@@ -1,6 +1,5 @@
 package com.version;
 
-import com.config.Configuration;
 import com.config.Constants;
 import com.data.StreamHash;
 import com.io.Connector;
@@ -49,10 +48,10 @@ public class Version {
                 || !getFile().exists();
     }
 
-    public void refresh() {
-        fileKey = (StreamHash.getStreamHash(Configuration.getFileStream().setInputStream(Connector.getFileInputStream(getFile()))));
+    void refresh() {
         if (urlKey == null) {
-            urlKey = (StreamHash.getStreamHash(Configuration.getUrlStream().setInputStream(Connector.getUrlInputStream(getUrl()))));
+            urlKey = (StreamHash.getStreamHash(Connector.getUrlInputStream(getUrl())));
         }
+        fileKey = (StreamHash.getStreamHash(Connector.getFileInputStream(getFile())));
     }
 }

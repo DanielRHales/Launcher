@@ -1,7 +1,7 @@
 package com.action.impl;
 
 import com.action.Process;
-import com.version.VersionManager;
+import com.version.VersionHandler;
 
 import javax.swing.*;
 
@@ -16,12 +16,15 @@ public class Refresher extends Process {
     }
 
     public void process() {
-        VersionManager.refreshVersions();
+        VersionHandler.getInstance().reload();
     }
 
     public void postProcess() {
-        getComboBox().setModel(new DefaultComboBoxModel(VersionManager.setVersions().length != 0 ? VersionManager.setVersions() : new String[]{"No Clients are Currently Available"}));
-        getComboBox().setSelectedIndex(0);
+        final int index = getComboBox().getSelectedIndex();
+        getComboBox().setModel(new DefaultComboBoxModel(VersionHandler.getInstance().isEmpty() ? new String[]{"No Clients are Currently Available"} : VersionHandler.getInstance().getVersions()));
+        final int length = VersionHandler.getInstance().getVersions().length;
+        getComboBox().setToolTipText(String.format("Clients List (%d Object%s)", length, length != 1 ? "s" : ""));
+        getComboBox().setSelectedIndex(index != -1 && VersionHandler.getInstance().getVersion(index) != null ? index : 0);
     }
 
     public String getDescription() {

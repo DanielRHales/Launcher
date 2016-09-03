@@ -10,6 +10,7 @@ import org.jvnet.substance.title.FlatTitlePainter;
 import org.jvnet.substance.watermark.SubstanceBinaryWatermark;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Daniel
@@ -34,7 +35,7 @@ public class Main {
     }
 
     private void initialize() {
-        new Thread(
+        EventQueue.invokeLater(
                 new SwingWorker() {
                     protected Void doInBackground() throws Exception {
                         UI.getInstance().getRefreshButton().doClick();
@@ -45,7 +46,7 @@ public class Main {
                         UI.getInstance().setVisible(true);
                     }
                 }
-        ).start();
+        );
     }
 
 }

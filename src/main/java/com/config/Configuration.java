@@ -1,6 +1,5 @@
 package com.config;
 
-import com.io.Stream;
 import com.logging.Logger;
 
 import java.security.MessageDigest;
@@ -15,18 +14,6 @@ import static sun.security.x509.CertificateAlgorithmId.ALGORITHM;
 public final class Configuration {
 
     private static final MessageDigest digest = getMessageDigest();
-
-    private static final Stream fileStream = new Stream();
-
-    private static final Stream urlStream = new Stream();
-
-    public static Stream getFileStream() {
-        return fileStream;
-    }
-
-    public static Stream getUrlStream() {
-        return urlStream;
-    }
 
     public static MessageDigest getDigest() {
         return digest;

@@ -1,11 +1,11 @@
 package com.action.impl;
 
 import com.action.Process;
-import com.config.Configuration;
 import com.config.Environment;
 import com.io.Connector;
 import com.logging.Logger;
 import com.version.Version;
+import com.version.VersionHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +25,7 @@ public class Invoker extends Process {
     }
 
     public void process() {
-        version.refresh();
+        VersionHandler.getInstance().refresh(version);
         if (version.updateRequired()) {
             Environment.remove(version.getFile());
             try {
@@ -50,17 +50,19 @@ public class Invoker extends Process {
     }
 
     private void download() throws IOException {
-        final InputStream input = Configuration.getUrlStream().setInputStream(Connector.getUrlInputStream(version.getUrl()));
-        final OutputStream output = Configuration.getFileStream().setOutputStream(Connector.getFileOutputStream(version.getFile()));
+        final InputStream input = Connector.getUrlInputStream(version.getUrl());
+        final OutputStream output = Connector.getFileOutputStream(version.getFile());
         final byte[] buffer = new byte[1024];
         int length;
-        while ((Configuration.getUrlStream().getInputStream() != null
-                && Configuration.getFileStream().getOutputStream() != null)
+        while ((input != null
+                && output != null)
                 && (length = input.read(buffer)) > 0) {
             output.write(buffer, 0, length);
         }
-        Configuration.getUrlStream().close();
-        Configuration.getFileStream().close();
+        assert input != null;
+        input.close();
+        assert output != null;
+        output.close();
         process();
     }
 

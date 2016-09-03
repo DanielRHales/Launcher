@@ -1,6 +1,15 @@
 package com.frame;
 
-import com.version.VersionManager;
+import com.config.Constants;
+import com.event.UIActionListener;
+import com.resource.Resource;
+import com.version.Version;
+import com.version.VersionHandler;
+
+import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
+import java.awt.*;
 
 /**
  * @author Daniel
@@ -8,12 +17,11 @@ import com.version.VersionManager;
 @SuppressWarnings("unchecked")
 public class UI extends javax.swing.JFrame {
 
-    private final javax.swing.DefaultComboBoxModel listModel = new javax.swing.DefaultComboBoxModel(new String[]{"No Clients are Currently Available"});
-    private final javax.swing.JButton refreshButton = new javax.swing.JButton();
-    private final javax.swing.JButton launchButton = new javax.swing.JButton();
-    private final javax.swing.JComboBox comboBox = new javax.swing.JComboBox(listModel);
-    private final java.awt.Dimension dimension = new java.awt.Dimension(360, 65);
-    private final com.event.UIActionListener actionListener = new com.event.UIActionListener();
+    private final JButton refreshButton = new JButton();
+    private final JButton launchButton = new JButton();
+    private final JComboBox comboBox = new JComboBox(new DefaultComboBoxModel(new String[]{"No Clients are Currently Available"}));
+    private final Dimension dimension = new Dimension(360, 65);
+    private final UIActionListener actionListener = new UIActionListener();
 
     private UI() {
         initComponents();
@@ -24,71 +32,72 @@ public class UI extends javax.swing.JFrame {
     }
 
     private void initComponents() {
-        final javax.swing.JPanel panel = new javax.swing.JPanel() {
+        final JPanel panel = new javax.swing.JPanel() {
             protected void paintComponent(java.awt.Graphics graphics) {
                 super.paintComponent(graphics);
-                graphics.drawImage(com.resource.Resource.BANNER, 0, 0, null);
+                graphics.drawImage(Resource.BANNER, 0, 0, null);
             }
         };
-        final javax.swing.JLabel label = new javax.swing.JLabel();
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle(com.config.Constants.TITLE);
+        final JLabel label = new JLabel();
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle(Constants.TITLE);
         setAlwaysOnTop(true);
-        setIconImage(com.resource.Resource.FRAME_ICON);
+        setIconImage(Resource.FRAME_ICON);
         setMaximumSize(dimension);
         setMinimumSize(dimension);
         setResizable(false);
-        refreshButton.setIcon(com.resource.Resource.REFRESH);
+        refreshButton.setToolTipText("Refresh Client List");
+        refreshButton.setIcon(Resource.REFRESH);
         refreshButton.addActionListener(actionListener);
-        launchButton.setIcon(com.resource.Resource.LAUNCH);
+        launchButton.setToolTipText("Invoke Selected Client");
+        launchButton.setIcon(Resource.LAUNCH);
         launchButton.addActionListener(actionListener);
-        comboBox.setFont(new java.awt.Font("Dialog", 1, 11));
+        comboBox.setToolTipText("Clients List (0 Objects)");
+        comboBox.setFont(new Font("Dialog", 1, 11));
         comboBox.setRenderer(new javax.swing.ListCellRenderer() {
             public java.awt.Component getListCellRendererComponent(javax.swing.JList list, Object value, int index, boolean selected, boolean focused) {
-                javax.swing.JLabel label = new javax.swing.JLabel();
-                final com.version.Version version = VersionManager.getVersions().length > 0 && index != -1 ? com.version.VersionManager.getVersion(index) : null;
+                final javax.swing.JLabel label = new javax.swing.JLabel();
+                final Version version = !VersionHandler.getInstance().isEmpty() && index != -1 ? VersionHandler.getInstance().getVersion(index) : null;
                 label.setText(version != null ? version.getDescription() : value.toString());
-                label.setIcon(version != null ? version.updateRequired() ? version.getFile().exists() ? com.resource.Resource.OUTDATED : com.resource.Resource.MISSING : com.resource.Resource.UPDATED : com.resource.Resource.LIST_ICON);
-                label.setForeground(version != null ? version.updateRequired() ? version.getFile().exists() ? java.awt.Color.YELLOW : java.awt.Color.RED : selected ? java.awt.Color.GREEN : java.awt.Color.YELLOW : java.awt.Color.WHITE);
+                label.setIcon(version != null ? version.updateRequired() ? version.getFile().exists() ? Resource.OUTDATED : Resource.MISSING : Resource.UPDATED : Resource.LIST_ICON);
+                label.setForeground(version != null ? version.updateRequired() ? version.getFile().exists() ? Color.YELLOW : Color.RED : selected ? Color.GREEN : Color.YELLOW : Color.WHITE);
                 return label;
             }
         });
         comboBox.addActionListener(actionListener);
-        comboBox.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent event) {
-                for (com.version.Version version : com.version.VersionManager.getVersions()) {
-                    version.refresh();
-                }
+        comboBox.addPopupMenuListener(new PopupMenuListener() {
+            public void popupMenuWillBecomeVisible(PopupMenuEvent event) {
+                VersionHandler.getInstance().refresh();
             }
 
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent event) {
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent event) {
 
             }
 
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent event) {
+            public void popupMenuCanceled(PopupMenuEvent event) {
 
             }
         });
-        label.setFont(new java.awt.Font("Dialog", 0, 3));
-        label.setText(String.format("Copyright © 2016 By the Developers of %s All Rights Reserved", com.config.Constants.SERVER_NAME));
-        final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(panel);
+        label.setFont(new Font("Dialog", 0, 3));
+        label.setText(String.format("Copyright © 2016 By the Developers of %s All Rights Reserved", Constants.SERVER_NAME));
+        final GroupLayout layout = new GroupLayout(panel);
         panel.setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(launchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(comboBox, 0, 278, Short.MAX_VALUE)).addGroup(layout.createSequentialGroup().addComponent(label).addGap(0, 0, Short.MAX_VALUE)));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false).addComponent(refreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(launchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(comboBox)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE).addComponent(label)));
-        getContentPane().add(panel, java.awt.BorderLayout.CENTER);
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(refreshButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(launchButton, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addComponent(comboBox, 0, 278, Short.MAX_VALUE)).addGroup(layout.createSequentialGroup().addComponent(label).addGap(0, 0, Short.MAX_VALUE)));
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false).addComponent(refreshButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(launchButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(comboBox)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE).addComponent(label)));
+        getContentPane().add(panel, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
     }
 
-    public javax.swing.JButton getRefreshButton() {
+    public JButton getRefreshButton() {
         return refreshButton;
     }
 
-    public javax.swing.JButton getLaunchButton() {
+    public JButton getLaunchButton() {
         return launchButton;
     }
 
-    public javax.swing.JComboBox getComboBox() {
+    public JComboBox getComboBox() {
         return comboBox;
     }
 

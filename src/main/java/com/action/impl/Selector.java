@@ -1,7 +1,7 @@
 package com.action.impl;
 
 import com.action.Process;
-import com.version.VersionManager;
+import com.version.VersionHandler;
 
 /**
  * @author Daniel
@@ -16,7 +16,7 @@ public class Selector extends Process {
     }
 
     public void process() {
-        VersionManager.refreshVersions();
+        VersionHandler.getInstance().refresh();
     }
 
     public void postProcess() {

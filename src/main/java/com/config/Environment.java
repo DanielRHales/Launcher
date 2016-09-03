@@ -29,7 +29,6 @@ public class Environment {
     }
 
     public static void remove(final File file) {
-        Configuration.getFileStream().close();
         if (!removeFile(file)) {
             if (Dialog.acceptedChoice(String.format("Try to remove \'%s\' again?", file.getName()), String.format("Error removing file '%s'.", file.getName()))) {
                 remove(file);
