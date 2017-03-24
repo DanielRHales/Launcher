@@ -5,35 +5,35 @@ package com.version;
  */
 public class VersionHandler {
 
-    private Version[] versions = null;
+    private Program[] programs = null;
 
     private VersionHandler() {
     }
 
-    public Version[] getVersions() {
-        return versions;
+    public Program[] getPrograms() {
+        return programs;
     }
 
-    public Version[] reload() {
-        return versions = VersionManager.loadVersions();
+    public Program[] reload() {
+        return programs = ProgramManager.loadVersions();
     }
 
-    public Version getVersion(int index) {
-        return versions[index];
+    public Program getVersion(int index) {
+        return programs[index];
     }
 
     public boolean isEmpty() {
-        return versions == null || versions.length <= 0;
+        return programs == null || programs.length <= 0;
     }
 
     public void refresh() {
-        for (Version version : versions) {
-            refresh(version);
+        for (Program program : programs) {
+            refresh(program);
         }
     }
 
-    public void refresh(Version version) {
-        version.refresh();
+    public void refresh(Program program) {
+        program.reload();
     }
 
     public static VersionHandler getInstance() {

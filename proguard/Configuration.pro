@@ -1,7 +1,7 @@
 -injars Launcher.jar
 -outjars Launcher-Obfuscated.jar
 
--libraryjars 'C:\Program Files (x86)\Java\jre1.8.0_91\lib\rt.jar'
+-libraryjars 'C:\Program Files\Java\jre1.8.0_121\lib\rt.jar'
 
 -target 1.6
 -allowaccessmodification
@@ -33,11 +33,10 @@
     <methods>;
 }
 
--keep public class com.version.Version {
-    private final java.lang.String name;
-    private final double version;
-    private final java.lang.String file;
-}
+ -keep class com.version.Program {
+     <fields>;
+     <methods>;
+ }
 
 # Keep - Applications. Keep all application classes, along with their 'main'
 # methods.

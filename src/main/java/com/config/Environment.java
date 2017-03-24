@@ -14,8 +14,25 @@ public class Environment {
 
     static {
         create(Constants.MAIN_DIRECTORY, true);
-        create(Constants.ERROR_DIRECTORY, true);
         create(Constants.PROGRAM_DIRECTORY, true);
+    }
+
+    public static void createFiles(File... files) {
+        for (File file : files) {
+            create(file, false);
+        }
+    }
+
+    public static void createParentDirectories(File... files) {
+        for (File file : files) {
+            create(file.getParentFile(), true);
+        }
+    }
+
+    public static void createDirectories(File... files) {
+        for (File file : files) {
+            create(file, true);
+        }
     }
 
     public static void create(final File file, final boolean directory) {

@@ -3,7 +3,7 @@ package com.frame;
 import com.config.Constants;
 import com.event.UIActionListener;
 import com.resource.Resource;
-import com.version.Version;
+import com.version.Program;
 import com.version.VersionHandler;
 
 import javax.swing.*;
@@ -15,11 +15,11 @@ import java.awt.*;
  * @author Daniel
  */
 @SuppressWarnings("unchecked")
-public class UI extends javax.swing.JFrame {
+public class UI extends JFrame {
 
     private final JButton refreshButton = new JButton();
     private final JButton launchButton = new JButton();
-    private final JComboBox comboBox = new JComboBox(new DefaultComboBoxModel(new String[]{"No Clients are Currently Available"}));
+    private final JComboBox comboBox = new JComboBox(new DefaultComboBoxModel(new String[]{"No Programs are Currently Available"}));
     private final Dimension dimension = new Dimension(360, 65);
     private final UIActionListener actionListener = new UIActionListener();
 
@@ -35,7 +35,7 @@ public class UI extends javax.swing.JFrame {
         final JPanel panel = new javax.swing.JPanel() {
             protected void paintComponent(java.awt.Graphics graphics) {
                 super.paintComponent(graphics);
-                graphics.drawImage(Resource.BANNER, 0, 0, null);
+                graphics.drawImage(Resource.BANNER, getWidth() - Resource.BANNER.getWidth(null), getHeight() - Resource.BANNER.getHeight(null), null);
             }
         };
         final JLabel label = new JLabel();
@@ -46,21 +46,21 @@ public class UI extends javax.swing.JFrame {
         setMaximumSize(dimension);
         setMinimumSize(dimension);
         setResizable(false);
-        refreshButton.setToolTipText("Refresh Client List");
+        refreshButton.setToolTipText("Refresh Program List");
         refreshButton.setIcon(Resource.REFRESH);
         refreshButton.addActionListener(actionListener);
-        launchButton.setToolTipText("Invoke Selected Client");
+        launchButton.setToolTipText("Invoke Selected Program");
         launchButton.setIcon(Resource.LAUNCH);
         launchButton.addActionListener(actionListener);
-        comboBox.setToolTipText("Clients List (0 Objects)");
+        comboBox.setToolTipText("Program List (0 Objects)");
         comboBox.setFont(new Font("Dialog", 1, 11));
         comboBox.setRenderer(new javax.swing.ListCellRenderer() {
             public java.awt.Component getListCellRendererComponent(javax.swing.JList list, Object value, int index, boolean selected, boolean focused) {
                 final javax.swing.JLabel label = new javax.swing.JLabel();
-                final Version version = !VersionHandler.getInstance().isEmpty() && index != -1 ? VersionHandler.getInstance().getVersion(index) : null;
-                label.setText(version != null ? version.getDescription() : value.toString());
-                label.setIcon(version != null ? version.updateRequired() ? version.getFile().exists() ? Resource.OUTDATED : Resource.MISSING : Resource.UPDATED : Resource.LIST_ICON);
-                label.setForeground(version != null ? version.updateRequired() ? version.getFile().exists() ? Color.YELLOW : Color.RED : selected ? Color.GREEN : Color.YELLOW : Color.WHITE);
+                final Program program = !VersionHandler.getInstance().isEmpty() && index != -1 ? VersionHandler.getInstance().getVersion(index) : null;
+                label.setText(program != null ? program.getDescription() : value.toString());
+                label.setIcon(program != null ? program.updateRequired() ? program.getFile().exists() ? Resource.OUTDATED : Resource.MISSING : Resource.UPDATED : Resource.LIST_ICON);
+                label.setForeground(program != null ? program.updateRequired() ? program.getFile().exists() ? Color.YELLOW : Color.RED : selected ? Color.GREEN : Color.YELLOW : Color.WHITE);
                 return label;
             }
         });

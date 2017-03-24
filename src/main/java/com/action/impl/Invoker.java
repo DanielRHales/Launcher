@@ -4,9 +4,10 @@ import com.action.Process;
 import com.config.Environment;
 import com.io.Connector;
 import com.logging.Logger;
-import com.version.Version;
+import com.version.Program;
 import com.version.VersionHandler;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,32 +18,32 @@ import java.util.logging.Level;
  */
 public class Invoker extends Process {
 
-    private Version version = null;
+    private Program program = null;
 
     public void preProcess() {
-        version = (Version) getComboBox().getSelectedItem();
+        program = (Program) getComboBox().getSelectedItem();
         toggle(false);
     }
 
     public void process() {
-        VersionHandler.getInstance().refresh(version);
-        if (version.updateRequired()) {
-            Environment.remove(version.getFile());
+        VersionHandler.getInstance().refresh(program);
+        if (program.updateRequired()) {
+            Environment.remove(program.getFile());
             try {
                 download();
             } catch (IOException ex) {
-                Logger.log(Invoker.class, Level.WARNING, String.format("Error downloading file %s", version.getUrl()), ex);
+                Logger.log(Invoker.class, Level.WARNING, String.format("Error downloading file %s", program.getUrl()), ex);
             }
         }
     }
 
     public void postProcess() {
         try {
-            Runtime.getRuntime().exec(new String[]{"java", "-jar", version.getFile().getAbsolutePath()});
+            new ProcessBuilder("java", "-jar", "-Xmx256m", program.getFile().getAbsolutePath()).start();
         } catch (IOException ex) {
             Logger.log(Invoker.class, Level.SEVERE, "Error invoking external program", ex);
         }
-        Environment.exit(false);
+        toggle(true);
     }
 
     public String getDescription() {
@@ -50,18 +51,17 @@ public class Invoker extends Process {
     }
 
     private void download() throws IOException {
-        final InputStream input = Connector.getUrlInputStream(version.getUrl());
-        final OutputStream output = Connector.getFileOutputStream(version.getFile());
+        Environment.createFiles(program.getFile());
+        final InputStream input = Connector.getUrlInputStream(program.getUrl());
+        final OutputStream output = new FileOutputStream(program.getFile());
         final byte[] buffer = new byte[1024];
         int length;
-        while ((input != null
-                && output != null)
-                && (length = input.read(buffer)) > 0) {
+        while (input != null && (length = input.read(buffer)) > 0) {
             output.write(buffer, 0, length);
         }
         assert input != null;
         input.close();
-        assert output != null;
+        output.flush();
         output.close();
         process();
     }

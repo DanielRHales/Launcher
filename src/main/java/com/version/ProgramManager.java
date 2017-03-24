@@ -16,22 +16,22 @@ import java.util.logging.Level;
 /**
  * @author Daniel
  */
-class VersionManager {
+class ProgramManager {
 
-    static Version[] loadVersions() {
+    static Program[] loadVersions() {
         final InputStream stream = Connector.getUrlInputStream(Constants.REMOTE_VERSIONS_LINK);
         if (stream == null) {
-            return new Version[]{};
+            return new Program[]{};
         }
         try {
             final BufferedReader reader = new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8")));
-            final Version[] versions = new Gson().fromJson(new JsonParser().parse(reader), new TypeToken<Version[]>() {
+            final Program[] programs = new Gson().fromJson(new JsonParser().parse(reader), new TypeToken<Program[]>() {
             }.getType());
             reader.close();
-            return versions;
+            return programs;
         } catch (Exception ex) {
-            Logger.log(VersionManager.class, Level.SEVERE, "Error loading Client Versions", ex);
-            return new Version[]{};
+            Logger.log(ProgramManager.class, Level.SEVERE, "Error loading Program Versions", ex);
+            return new Program[]{};
         }
     }
 

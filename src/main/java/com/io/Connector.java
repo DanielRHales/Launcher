@@ -14,30 +14,6 @@ import java.util.logging.Level;
  */
 public class Connector {
 
-    public static FileOutputStream getFileOutputStream(File file) {
-        if (!file.exists()) {
-            return null;
-        }
-        try {
-            return new FileOutputStream(file);
-        } catch (FileNotFoundException ex) {
-            Logger.log(Connector.class, Level.WARNING, String.format("Unable to find %s", file.getAbsolutePath()), ex);
-            return null;
-        }
-    }
-
-    public static FileInputStream getFileInputStream(File file) {
-        if (!file.exists()) {
-            return null;
-        }
-        try {
-            return new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            Logger.log(Connector.class, Level.WARNING, String.format("Unable to find %s", file.getAbsolutePath()), ex);
-            return null;
-        }
-    }
-
     public static InputStream getUrlInputStream(String url) {
         try {
             return getUrlInputStream(getUrlConnection(url));

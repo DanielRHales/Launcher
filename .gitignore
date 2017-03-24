@@ -10,3 +10,6 @@ hs_err_pid*
 .gitignore
 .idea/workspace.xml
 target/
+library/
+proguard/
+unused/

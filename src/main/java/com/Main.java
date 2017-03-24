@@ -1,11 +1,13 @@
 package com;
 
 import com.frame.UI;
+import org.apache.commons.lang3.SystemUtils;
 import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.border.FlatBorderPainter;
 import org.jvnet.substance.button.ClassicButtonShaper;
 import org.jvnet.substance.painter.MatteGradientPainter;
-import org.jvnet.substance.skin.EmeraldDuskSkin;
+import org.jvnet.substance.skin.CremeSkin;
+import org.jvnet.substance.skin.RavenSkin;
 import org.jvnet.substance.title.FlatTitlePainter;
 import org.jvnet.substance.watermark.SubstanceBinaryWatermark;
 
@@ -21,7 +23,7 @@ public class Main {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
         JPopupMenu.setDefaultLightWeightPopupEnabled(true);
-        SubstanceLookAndFeel.setSkin(new EmeraldDuskSkin());
+        SubstanceLookAndFeel.setSkin(SystemUtils.IS_OS_MAC ? new CremeSkin() : new RavenSkin());
         SubstanceLookAndFeel.setCurrentWatermark(new SubstanceBinaryWatermark());
         SubstanceLookAndFeel.setCurrentBorderPainter(new FlatBorderPainter());
         SubstanceLookAndFeel.setCurrentGradientPainter(new MatteGradientPainter());

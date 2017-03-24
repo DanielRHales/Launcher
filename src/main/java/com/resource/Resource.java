@@ -32,7 +32,7 @@ public class Resource {
                     "Java"
     );
 
-    public static final Image BANNER = resized(getImage(getIcon("Banner")));
+    public static final Image BANNER = getImage(getIcon("Banner"));
 
     public static final Image FRAME_ICON = getImage(getIcon("Icon"));
 
