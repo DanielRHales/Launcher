@@ -13,8 +13,7 @@ import java.util.logging.Level;
 public class Environment {
 
     static {
-        create(Constants.MAIN_DIRECTORY, true);
-        create(Constants.PROGRAM_DIRECTORY, true);
+        createDirectories(Constants.MAIN_DIRECTORY, Constants.PROGRAM_DIRECTORY);
     }
 
     public static void createFiles(File... files) {
@@ -23,19 +22,13 @@ public class Environment {
         }
     }
 
-    public static void createParentDirectories(File... files) {
-        for (File file : files) {
-            create(file.getParentFile(), true);
-        }
-    }
-
-    public static void createDirectories(File... files) {
+    private static void createDirectories(File... files) {
         for (File file : files) {
             create(file, true);
         }
     }
 
-    public static void create(final File file, final boolean directory) {
+    private static void create(final File file, final boolean directory) {
         if (directory ? !createDirectory(file) : !createFile(file)) {
             if (Dialog.acceptedChoice(String.format("Try to create \'%s\' again?", file.getName()), String.format("Error creating %s '%s'.", directory ? "directory" : "file", file.getName()))) {
                 create(file, directory);
@@ -56,14 +49,8 @@ public class Environment {
         createFile(file);
     }
 
-    private static void exit() {
-        exit(true);
-    }
-
-    public static void exit(final boolean notify) {
-        if (notify) {
-            Dialog.displayMessage();
-        }
+    public static void exit() {
+        Dialog.displayMessage();
         System.exit(0);
     }
 

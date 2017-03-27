@@ -14,8 +14,8 @@ public class VersionHandler {
         return programs;
     }
 
-    public Program[] reload() {
-        return programs = ProgramManager.loadVersions();
+    public void reload() {
+        programs = ProgramManager.loadVersions();
     }
 
     public Program getVersion(int index) {

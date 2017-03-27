@@ -13,10 +13,28 @@
 -dontwarn
 
 
--keep class com.google.gson.** {
+# Gson specific classes
+-keep class sun.misc.Unsafe {
     <fields>;
     <methods>;
 }
+
+# -keep class com.google.gson.stream.** { *; }
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** {
+    <fields>;
+    <methods>;
+}
+
+# Prevent proguard from stripping interface information from TypeAdapterFactory,
+# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * extends com.google.gson.TypeAdapterFactory
+
+-keep class * extends com.google.gson.JsonSerializer
+
+-keep class * extends com.google.gson.JsonDeserializer
+
+# #---------------End: proguard configuration for Gson  ----------
 
 -keep class contrib.** {
     <fields>;
@@ -28,15 +46,11 @@
     <methods>;
 }
 
--keep class org.apache.commons.lang3.** {
-    <fields>;
-    <methods>;
+-keepclassmembers class *com.version.Program {
+    private *** *type;
+    private *** *version;
+    private *** *identifier;
 }
-
- -keep class com.version.Program {
-     <fields>;
-     <methods>;
- }
 
 # Keep - Applications. Keep all application classes, along with their 'main'
 # methods.

@@ -6,7 +6,6 @@ import com.logging.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
 /**
@@ -22,13 +21,11 @@ public final class StreamHash {
             return checkStream(stream);
         } catch (IOException ex) {
             Logger.log(StreamHash.class, Level.WARNING, "Error getting stream", ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.log(StreamHash.class, Level.WARNING, "Error getting stream", ex);
         }
         return null;
     }
 
-    private static byte[] getBytes(final InputStream stream) throws NoSuchAlgorithmException, IOException {
+    private static byte[] getBytes(final InputStream stream) throws IOException {
         final MessageDigest digest = Configuration.getDigest();
         int value;
         final byte[] buffer = new byte[128];
@@ -38,12 +35,12 @@ public final class StreamHash {
         return digest.digest();
     }
 
-    private static String checkStream(final InputStream stream) throws NoSuchAlgorithmException, IOException {
+    private static String checkStream(final InputStream stream) throws IOException {
         final byte[] bytes = getBytes(stream);
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (byte array : bytes) {
-            result += Integer.toString((array & 0xff) + 0x100, 16).substring(1);
+            result.append(Integer.toString((array & 0xff) + 0x100, 16).substring(1));
         }
-        return result;
+        return result.toString();
     }
 }

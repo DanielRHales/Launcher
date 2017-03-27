@@ -1,9 +1,7 @@
 package com.frame.impl;
 
 import com.action.Process;
-import com.action.impl.Invoker;
-import com.action.impl.Refresher;
-import com.action.impl.Selector;
+import com.action.impl.*;
 import com.config.Constants;
 import com.frame.UI;
 
@@ -17,7 +15,9 @@ import java.util.Map;
 public enum Action {
     REFRESH(UI.getInstance().getRefreshButton(), new Refresher()),
     LAUNCH(UI.getInstance().getLaunchButton(), new Invoker()),
-    SELECT(UI.getInstance().getComboBox(), new Selector());
+    SELECT(UI.getInstance().getComboBox(), new Selector()),
+    TOGGLE_TERMINAL(UI.getInstance().getTerminalCheckbox(), new TerminalToggle()),
+    TOGGLE_DISPOSE(UI.getInstance().getDisposeCheckbox(), new DisposerToggle());
 
     private static final Map<JComponent, Action> BY_COMPONENT_VALUE = new HashMap<JComponent, Action>();
 

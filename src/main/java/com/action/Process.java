@@ -13,7 +13,6 @@ public abstract class Process {
     private final JButton launchButton;
     private final JComboBox comboBox;
 
-    @SuppressWarnings("unused")
     protected Process() {
         refreshButton = UI.getInstance().getRefreshButton();
         launchButton = UI.getInstance().getLaunchButton();

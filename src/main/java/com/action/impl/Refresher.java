@@ -23,7 +23,7 @@ public class Refresher extends Process {
         final int index = getComboBox().getSelectedIndex();
         getComboBox().setModel(new DefaultComboBoxModel(VersionHandler.getInstance().isEmpty() ? new String[]{"No Programs are Currently Available"} : VersionHandler.getInstance().getPrograms()));
         final int length = VersionHandler.getInstance().getPrograms().length;
-        getComboBox().setToolTipText(String.format("Programs List (%d Object%s)", length, length != 1 ? "s" : ""));
+        getComboBox().setToolTipText(String.format("Programs List (%d)", length));
         getComboBox().setSelectedIndex(index != -1 && VersionHandler.getInstance().getVersion(index) != null ? index : 0);
     }
 

@@ -13,6 +13,9 @@ import static sun.security.x509.CertificateAlgorithmId.ALGORITHM;
  */
 public final class Configuration {
 
+    public static boolean terminal = false;
+    public static boolean dispose = true;
+
     private static final MessageDigest digest = getMessageDigest();
 
     public static MessageDigest getDigest() {
@@ -21,14 +24,10 @@ public final class Configuration {
 
     private static MessageDigest getMessageDigest() {
         try {
-            return getMessageDigest(Constants.ALGORITHM);
+            return MessageDigest.getInstance(Constants.ALGORITHM);
         } catch (NoSuchAlgorithmException ex) {
             Logger.log(Configuration.class, Level.SEVERE, String.format("No Such Algorithm - %s", ALGORITHM), ex);
             return null;
         }
-    }
-
-    private static MessageDigest getMessageDigest(String algorithm) throws NoSuchAlgorithmException {
-        return MessageDigest.getInstance(algorithm);
     }
 }

@@ -22,7 +22,7 @@ public class Connector {
             if (Dialog.acceptedChoice("Failed to Connect", "Try to Reconnect?")) {
                 return getUrlInputStream(url);
             } else {
-                Environment.exit(true);
+                Environment.exit();
             }
         }
         return null;
