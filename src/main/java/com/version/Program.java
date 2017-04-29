@@ -46,10 +46,7 @@ public class Program {
     }
 
     public boolean updateRequired() {
-        return fileKey == null
-                || identifier == null
-                || !fileKey.equals(identifier)
-                || !getFile().exists();
+        return fileKey == null || identifier == null || !fileKey.equals(identifier) || !getFile().exists();
     }
 
     void reload() {
@@ -77,7 +74,7 @@ public class Program {
             if (Configuration.terminal) {
                 new Terminal(this, process.getInputStream(), process.getErrorStream()).setVisible(true);
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.log(Program.class, Level.SEVERE, "Error invoking external program", ex);
         }
     }

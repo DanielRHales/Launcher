@@ -32,19 +32,14 @@ public class UI extends JFrame {
     }
 
     private void initialize() {
-        final JPanel panel = new JPanel() {
-            protected void paintComponent(Graphics graphics) {
-                super.paintComponent(graphics);
-                graphics.drawImage(Resource.BANNER, (getWidth() - Resource.BANNER.getWidth(null)) / 2, (getHeight() - Resource.BANNER.getHeight(null)) / 2, null);
-            }
-        };
+        final JPanel panel = new JPanel();
         final JLabel label = new JLabel();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(Constants.TITLE);
         setAlwaysOnTop(true);
         setResizable(false);
-        setIconImage(Resource.FRAME_ICON);
+        setIconImages(Resource.ICONS_LIST);
         setMaximumSize(dimension);
         setMinimumSize(dimension);
 
